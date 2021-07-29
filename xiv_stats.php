@@ -544,7 +544,7 @@ $db->close();
           }
 
           .collapsible-header-icon {
-              margin-top: 6;
+              margin-top: 15;
           }
 
           .collapsible-body {
