@@ -543,6 +543,14 @@ $db->close();
               border-bottom: unset;
           }
 
+          .collapsible-header-icon {
+              margin-top: 6;
+          }
+
+          .collapsible-body {
+              border-bottom: unset;
+          }
+
           .collapsible  {
             border: unset;
             box-shadow: unset;
@@ -810,7 +818,7 @@ $db->close();
               <a id="population-realm-america"></a>
               <ul class="collapsible">
                 <li>
-                    <div class="collapsible-header"><i class="material-icons">unfold_more</i><div class="light region-title">AMERICA</div></div>
+                    <div class="collapsible-header"><i class="material-icons collapsible-header-icon">unfold_more</i><div class="light region-title">AMERICA</div></div>
                     <div class="collapsible-body">
               <div class="light region-subtitle">ALL CHARACTERS</div>
               <!-- Begin Chart -->
@@ -824,7 +832,7 @@ $db->close();
         </li>
               <hr/>
               <li>
-                <div class="collapsible-header"><i class="material-icons">unfold_more</i><div class="light region-title">JAPAN</div></div>
+                <div class="collapsible-header"><i class="material-icons collapsible-header-icon">unfold_more</i><div class="light region-title">JAPAN</div></div>
                 <div class="collapsible-body">
               <a id="population-realm-japan"></a>
               <div class="light region-subtitle">ALL CHARACTERS</div>
@@ -838,7 +846,8 @@ $db->close();
         </div>
         </li>
               <hr/>
-              <div class="collapsible-header"><i class="material-icons">unfold_more</i><div class="light region-title">EUROPE</div></div>
+              <li>
+              <div class="collapsible-header"><i class="material-icons collapsible-header-icon">unfold_more</i><div class="light region-title">EUROPE</div></div>
                 <div class="collapsible-body">
               <a id="population-realm-europe"></a>
               <div class="light region-subtitle">ALL CHARACTERS</div>
