@@ -1,0 +1,269 @@
+(function() {
+	var eorzeadb_klass = {
+		cdn_prefix: 'https://img.finalfantasyxiv.com/lds/',
+		$: null,
+		versions: {data: 0, js: 0, css: 0},
+		dynamic_tooltip: false,
+		is_tooltip_show: false,
+		popup_contents: {},
+		popup_content_last_key: null,
+		pushup: function(data) {
+			var data_key = data.subdomain + '/' + data.path + '/' + data.key;
+
+			// remove gaiji
+			data.html = data.html.replace(/[\uE020-\uF8FF]/g, '');
+
+			eorzeadb.popup_contents[data_key] = data.html;
+		},
+		init_after_domready: function($) {
+			eorzeadb.init_tooltip_frame($);
+			eorzeadb.init_db_links($);
+		},
+		init_tooltip_frame: function($) {
+			var $tooltip = $('#eorzeadb_tooltip');
+			if ( !$tooltip.length ) {
+				$tooltip = $(document.createElement('div'));
+				$tooltip.attr('id', 'eorzeadb_tooltip');
+				$tooltip.hide();
+				$('body').append($tooltip);
+				$tooltip.css({
+					position: 'absolute',
+					top:  0,
+					left: 0
+				});
+				$tooltip.hover(
+					function() {
+						$tooltip.stop().css({opacity: 1}).show();
+						eorzeadb.is_tooltip_show = true;
+						$tooltip.find('.js__tooltip').js__tooltip();
+					},
+					function() {
+						eorzeadb.hide_tooltip();
+					}
+				).click(
+					function(){
+						if ( eorzeadb.is_tooltip_show ) {
+							eorzeadb.hide_tooltip();
+						}
+						else {
+							eorzeadb.is_tooltip_show = true;
+						}
+					}
+				);
+			}
+			eorzeadb.$tooltip = $tooltip;
+		},
+		init_db_links: function($) {
+			var hover_timer;
+			$('body')
+				.on({
+					'mouseenter': function() {
+						var $this = $(this);
+						if (hover_timer) {
+							clearTimeout(hover_timer);
+							hover_timer = null;
+						}
+						hover_timer = setTimeout(function() {
+							eorzeadb.show_tooltip($this);
+						}, 300);
+					},
+					'mouseleave': function() {
+						if (hover_timer) {
+							clearTimeout(hover_timer);
+							hover_timer = null;
+						}
+						eorzeadb.hide_tooltip($(this));
+					}
+			}, '.eorzeadb_link')
+			;
+		},
+		show_tooltip: function($db_link) {
+			eorzeadb.get_popup_content($db_link, function(this_popup_content) {
+				if ( !this_popup_content ) {
+					return;
+				}
+
+				eorzeadb.$tooltip
+					.stop()
+					.css({
+						opacity: 1
+					})
+					.html(this_popup_content)
+					.show(0, function(){
+						eorzeadb.set_tooltip_position($db_link);
+						eorzeadb.is_tooltip_show = true;
+						eorzeadb.init_tooltip_html();
+					})
+				;
+			});
+		},
+		hide_tooltip: function() {
+			eorzeadb.$tooltip.fadeOut(500);
+			eorzeadb.is_tooltip_show = false;
+		},
+		init_tooltip_html: function() {
+			eorzeadb.$tooltip.find('a').prop('target', '_blank');
+
+			eorzeadb.$tooltip.find('.eorzeadb_tooltip_this_year').text(new Date().getFullYear());
+			var $column1 = eorzeadb.$tooltip.find('.tooltip_view .table_black .column1');
+			if ( $column1.length > 0 ) {
+				$column1.find('td .no_th tr:nth-child(odd) td').css({backgroundColor:'#2e2e2e'});
+				$column1.find('td .no_th tr:nth-child(even) td').css({backgroundColor:'#333333'});
+				$column1.find('tr:nth-child(even) td').css({backgroundColor:'#2e2e2e'});
+				$column1.find('tr:nth-child(odd) td').css({backgroundColor:'#333333'});
+				$column1.find('.inr_table tr:nth-child(even) td').css({backgroundColor:'#2e2e2e'});
+				$column1.find('.inr_table tr:nth-child(odd) td').css({backgroundColor:'#333333'})
+			}
+		},
+		get_url_info: function($db_link) {
+			var ldst_href;
+			if ( $db_link.data('ldst-href') ) {
+				ldst_href = $db_link.data('ldst-href');
+			}
+			else {
+				ldst_href = $db_link.attr('href');
+			}
+			var matchs = ldst_href.match(/^(https?:\/\/([^\.]+)\..*playguide\/db\/([^#\?]*?))\/?(\?.+)?(#.+)?$/);
+			var subdomain = matchs[2];
+			var path      = matchs[3];
+			if ( !eorzeadb.dynamic_tooltip && eorzeadb.versions.data ) {
+				url = eorzeadb.cdn_prefix + 'pc/tooltip/'+ eorzeadb.versions.data + '/' + subdomain + '/' + path + '.js';
+			}
+			else {
+				url = matchs[1] + '/jsonp/';
+				url = url.replace(/^http:/, 'https:');
+			}
+			return {
+				'url': url,
+				'data_key': subdomain + '/' + path
+			};
+		},
+		get_popup_content: function($db_link, cb) {
+			var url_info = eorzeadb.get_url_info($db_link);
+			eorzeadb.popup_content_last_key = url_info.data_key;
+			if ( eorzeadb.popup_contents.hasOwnProperty(url_info.data_key) ) {
+				if ( cb ) { cb(eorzeadb.popup_contents[url_info.data_key]) }
+				return;
+			}
+			eorzeadb.popup_contents[url_info.data_key] = '';
+
+			eorzeadb.$.ajax({
+				cache: true,
+				type: 'GET',
+				url: url_info.url,
+				dataType: 'script',
+				success: function() {
+					if ( cb && eorzeadb.popup_content_last_key === url_info.data_key ) {
+						cb(eorzeadb.popup_contents[url_info.data_key])
+					}
+				}
+			});
+		},
+		set_tooltip_position: function($db_link) {
+			var $                 = eorzeadb.$;
+			var $window           = $(window);
+			var $tooltip          = eorzeadb.$tooltip;
+			var $tooltip_child    = $tooltip.children(':first');
+			var tooltip_height    = $tooltip_child.height() + 26;
+			var link_offset       = $db_link.offset();
+			var link_offset_top   = Math.round(link_offset.top);
+			var link_offset_left  = link_offset.left;
+			var window_width      = $(window).innerWidth();
+			var window_height     = $window.height();
+			var window_center     = Math.round(window_width / 2);
+			var window_scroll_top = $window.scrollTop();
+			var tooltip_under_pos = link_offset_top - window_scroll_top + tooltip_height;
+
+			var top_pos, left_pos;
+
+			if((window_width - link_offset_left - $db_link.width() - 10) > $tooltip_child.width()){
+				left_pos = ( $db_link.width() + link_offset_left + 10 );
+			}else{
+				left_pos = (  link_offset_left  - 10 -  $tooltip_child.width() - 20 );
+				if(left_pos < 0 ){
+					left_pos = ( $db_link.width() + link_offset_left + 10 );
+				}
+			}
+
+
+			if ( tooltip_under_pos >  window_height ) {
+				if ( window_height < tooltip_height ) {
+					top_pos = window_scroll_top;
+				}
+				else {
+					top_pos = link_offset_top - (tooltip_under_pos - window_height);
+				}
+			}
+			else if ( link_offset_top > window_scroll_top && window_height > tooltip_height ) {
+				top_pos = link_offset_top;
+			}
+			else {
+				top_pos = window_scroll_top - link_offset_top;
+			}
+
+			$tooltip.css({
+				top:  top_pos  + 'px',
+				left: left_pos + 'px'
+			});
+		}
+	};
+	eorzeadb.init = function($) {
+		$.extend(eorzeadb_klass, eorzeadb);
+		eorzeadb = eorzeadb_klass;
+		eorzeadb.$ = $;
+		$(eorzeadb.init_after_domready);
+		$.fn.js__tooltip=function(){
+			return this.each(function(){
+				var ua = navigator.userAgent;
+				if(!/iPhone|iPad|iPod/.test(ua)) {
+					var $this = $(this);
+					var $tooltipContent;
+					var _title;
+					var source = '';
+					source += '<div class="eorzeadb_tooltip__text"></div>';
+					$('body').append(source);
+					$tooltipContent = $('.eorzeadb_tooltip__text');
+					$this.css({'cursor':'normal'});
+					if ($tooltipContent.length != 1) {
+						$tooltipContent.eq(1).remove();
+					}
+
+					$tooltipContent.css({position:'fixed', display:'none'});
+
+					$this.hover(function() {
+						_title = $(this).data('tooltip');
+						$tooltipContent.stop().css({display:'block', opacity:1}).html(_title);
+						if($(this).find('a').length != 0){
+							$(this).find('a').data('tooltip','');
+						}
+					},function() {
+						if ($(this).find('a').length != 0) {
+							$(this).find('a').data('tooltip',_title);
+						}
+						$tooltipContent.stop().fadeOut(500);
+					});
+					$this.mousemove(function(e) {
+						var posTop = e.clientY + 20;
+						var posLeft = e.clientX;
+						if (posLeft+$tooltipContent.outerWidth()>$(window).width()) {
+							posTop = e.clientY + ($tooltipContent.height());
+							posLeft = posLeft - ((posLeft + $tooltipContent.outerWidth() - $(window).width()) + 10);
+						}
+						$tooltipContent.css({top:posTop+'px',left:posLeft+'px'});
+					});
+					$this.mousedown(function(e) {
+						$tooltipContent.stop().fadeOut(500);
+					});
+				}else{
+					return;
+				}
+
+
+			});
+		};
+	};
+
+
+
+
+})();
