@@ -507,6 +507,9 @@ $db->close();
       <!-- Compiled and minified JavaScript -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
       <!-- Google Analytics -->
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -534,6 +537,17 @@ $db->close();
                 - #674ea0 - DoH
                 - #a88d3b - DoL
           */
+
+          .collapsible-header {
+              background-color: unset;
+              border-bottom: unset;
+          }
+
+          .collapsible  {
+            border: unset;
+            box-shadow: unset;
+            -webkit-box-shadow: unset;
+          }
 
           .logo {
               float: left !important;
@@ -662,8 +676,7 @@ $db->close();
           <a class='dropdown-button btn' href='#' data-activates='makeup-dropdown'>Makeup of Eorzea</a>
           <a class='dropdown-button btn' href='#' data-activates='content-dropdown'>Exploration of Eorzea</a>
           <a class='dropdown-button btn' href='#' data-activates='player-behaviours-dropdown'>Player Behaviours</a>
-          <a class="waves-effect waves-light btn" href='#top'><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-
+          <a class="waves-effect waves-light btn" href="#top"><i class="material-icons">arrow_upward</i></a>
           <!-- Population Stats Dropdown -->
           <ul id='pop-dropdown' class='dropdown-content'>
               <li><a href="#population">World</a></li>
@@ -794,7 +807,11 @@ $db->close();
           <div class="card-content">
               <a id="population-realm"><span class="card-title light">WHICH REALMS DO CHARACTERS POPULATE?</span></a>
               <hr/>
-              <a id="population-realm-america"><div class="light region-title">AMERICA</div></a>
+              <a id="population-realm-america"></a>
+              <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">unfold_more</i><div class="light region-title">AMERICA</div></div>
+                    <div class="collapsible-body">
               <div class="light region-subtitle">ALL CHARACTERS</div>
               <!-- Begin Chart -->
               <div id="america_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
@@ -803,8 +820,13 @@ $db->close();
               <!-- Begin Chart -->
               <div id="america_active_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
               <!-- End Chart -->
+            </div>
+        </li>
               <hr/>
-              <a id="population-realm-japan"><div class="light region-title">JAPAN</div></a>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">unfold_more</i><div class="light region-title">JAPAN</div></div>
+                <div class="collapsible-body">
+              <a id="population-realm-japan"></a>
               <div class="light region-subtitle">ALL CHARACTERS</div>
               <!-- Begin Chart -->
               <div id="japan_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
@@ -813,8 +835,12 @@ $db->close();
               <!-- Begin Chart -->
               <div id="japan_active_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
               <!-- End Chart -->
+        </div>
+        </li>
               <hr/>
-              <a id="population-realm-europe"><div class="light region-title">EUROPE</div></a>
+              <div class="collapsible-header"><i class="material-icons">unfold_more</i><div class="light region-title">EUROPE</div></div>
+                <div class="collapsible-body">
+              <a id="population-realm-europe"></a>
               <div class="light region-subtitle">ALL CHARACTERS</div>
               <!-- Begin Chart -->
               <div id="europe_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
@@ -823,7 +849,9 @@ $db->close();
               <!-- Begin Chart -->
               <div id="europe_active_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
               <!-- End Chart -->
-
+        </div>
+        </li>
+        </ul>
           </div>
       </div>
 
