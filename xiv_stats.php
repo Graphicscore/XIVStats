@@ -200,10 +200,13 @@ $prearr = 0;
 $prehw = 0;
 $presb = 0;
 $preshb = 0;
+$preendwalker = 0;
 $ps4_collectors = 0;
 $pc_collectors = 0;
 $hw_collectors = 0;
 $sb_collectors = 0;
+$shb_collectors = 0;
+$endwalker_collectors = 0;
 $arrartbook = 0;
 $sbartbook = 0;
 $beforemeteor = 0;
@@ -332,6 +335,8 @@ while($row = $player_overview_query->fetch_assoc()) {
     $fmt_presb = number_format($presb);
     $preshb += isset($row["preshb"]) && $row["preshb"] == 1 ? 1 : 0;
     $fmt_preshb = number_format($preshb);
+    $preendwalker += in_array("Wind-up Palom",$minions) ? 1 : 0;
+    $fmt_pre_endwalker = number_format($preendwalker);
 
     // Collectors Edition
     $ps4_collectors += isset($row["ps4collectors"]) && $row["ps4collectors"] == 1 ? 1 : 0;
@@ -344,6 +349,8 @@ while($row = $player_overview_query->fetch_assoc()) {
     $fmt_sb_collectors = number_format($sb_collectors);
     $shb_collectors += in_array("Grani", $mounts) ? 1 : 0;
     $fmt_shb_collectors = number_format($shb_collectors);
+    $endwalker_collectors += in_array("Wind-up Porom", $minions) ? 1 : 0;
+    $fmt_endwalker_collectors = number_format($endwalker_collectors);
 
     // Physical Items
     $arrartbook += isset($row["arrartbook"]) && $row["arrartbook"] == 1 ? 1 : 0;
@@ -1092,6 +1099,16 @@ $db->close();
                 <div class="col s6">
                     <div class="light region-subtitle">SHADOWBRINGERS</div>
                     <div class="region-stat"><?php echo $fmt_shb_collectors; ?></div>
+                </div>
+              </div>
+	     <div class="row">
+                <div class="col s6">
+                    <div class="light region-subtitle">ENDWALKER</div>
+                    <div class="region-stat"><?php echo $fmt_pre_endwalker; ?></div>
+                </div>
+                <div class="col s6">
+                    <div class="light region-subtitle">ENDWALKER</div>
+                    <div class="region-stat"><?php if($fmt_endwalker_collectors == 0) { echo "-"; } else { echo $fmt_endwalker_collectors; } ?></div>
                 </div>
               </div>
               <div class="light region-subtitle">Redeemed minion counted</div>
