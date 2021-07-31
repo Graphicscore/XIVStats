@@ -1,0 +1,158 @@
+/*
+  Core colour palette (https://coolors.co/303440-c3ac5c-702670-9e0000-039be5):
+      - #212121 - Grey Darken-4 - Background
+      - #c3ac5c - Gunmetel - Card background
+      - #c3ac5c - Vega Gold - Titles and highlights
+      - #702670 - Midnight - Main theme colour (Purple, Shadowbringers)
+      - #9E0000 - USC Cardinal - Secondary theme color (Crimson, Stormblood)
+      - #039BE5 - Vivid Ceruleum - Secondary theme color (Azure, Heavensward)
+
+  Role colour palette:
+      - #3d51b1 - Tank
+      - #3d6830 - Healer
+      - #783536 - DPS
+      - #674ea0 - DoH
+      - #a88d3b - DoL
+*/
+
+.collapsible-header {
+    background-color: unset;
+    border-bottom: unset;
+}
+
+.collapsible-header-icon {
+    margin-top: 15;
+}
+
+.collapsible-body {
+    border-bottom: unset;
+}
+
+.collapsible  {
+  border: unset;
+  box-shadow: unset;
+  -webkit-box-shadow: unset;
+}
+
+.logo {
+    float: left !important;
+    width: 300px;
+}
+
+.card {
+  background-color: #303440 !important;
+}
+
+.card-title {
+  color: #c3ac5c;
+}
+
+.card-content {
+  color: white;
+}
+
+hr, .divider {
+  color: #c3ac5c; 
+  background-color: #c3ac5c;
+  height: 3px;
+  border: 0;
+  margin-bottom: 15px;
+}
+
+.box-element {
+    width: 100%;
+}
+
+#pageTitleBox {
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+.section-title {
+    text-align: left;
+    color: #c3ac5c;
+    font-size: 28pt;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.region-title {
+    text-align: center;
+    color: #c3ac5c;
+    font-size: 28pt;
+}
+
+.region-subtitle {
+    text-align: center;
+    color: white;
+    font-size: large;
+}
+
+.region-stat {
+    text-align: center;
+    font-size: 48pt;
+}
+
+.region-stat-diff {
+    font-size: medium;
+}
+
+.region-stat-label {
+    text-align: center;
+    font-size: large;
+}
+
+.dropdown-button, .waves-light, .btn, .btn:visited{
+  background-color: #702670;
+}
+
+.dropdown-button:hover, .waves-light:hover, .btn:hover {
+  background-color: plum;
+}
+
+.dropdown-content li>a{
+    color: black;
+}
+
+.dropdown-content li>a:hover {
+    background-color: #c3ac5c;
+    color: white;
+}
+
+.navbar {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-nav-scrolled {
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+footer.page-footer {
+    margin-top: 0px;
+    padding-top: 0px;
+    background-color: #c3ac5c;
+}
+
+.tab > a.active {
+    background-color: #5a6279 !important;
+}
+
+.tabs {
+    background-color: #3a3f4e;
+    margin-bottom: 24px;
+}
+
+.tabs .indicator {
+    background-color: #c3ac5c;
+}
+
+ul > .tab:not(:first-child):not(:nth-child(3)) {
+    border-left: solid 1px #c3ac5c;
+    border-right: solid 1px #c3ac5c;
+}
