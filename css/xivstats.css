@@ -156,3 +156,8 @@ ul > .tab:not(:first-child):not(:nth-child(3)) {
     border-left: solid 1px #c3ac5c;
     border-right: solid 1px #c3ac5c;
 }
+
+.fullscreen-barchart {
+    width: 100%;
+    height:400px;
+}

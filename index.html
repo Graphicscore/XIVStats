@@ -12,10 +12,14 @@
 
     <script src="https://unpkg.com/human-format@0.10/index.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+
     <script src="/js/xivdata.js"></script>
     <!-- Chartjs--> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js" integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
+
+
       <!-- Compiled and minified CSS -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
       <!-- Compiled and minified JavaScript -->
@@ -194,24 +198,24 @@
                 </div>
                 <div id="population_america" class="col s12">
                     <div class="light region-subtitle">ALL CHARACTERS</div>
-                    <canvas id="canvas_population_america_all" width="400" height="150"></canvas>
+                    <div id="div_population_america_all" class="fullscreen-barchart"></div>
                     <hr>
                     <div class="light region-subtitle">ACTIVE CHARACTERS*</div>
-                    <canvas id="canvas_population_america_active" width="400" height="150"></canvas>
+                    <div id="div_population_america_active" class="fullscreen-barchart"></div>
                 </div>
                 <div id="population_japan" class="col s12">
                     <div class="light region-subtitle">ALL CHARACTERS</div>
-                    <canvas id="canvas_population_japan_all" width="400" height="150"></canvas>
+                    <div id="div_population_japan_all" class="fullscreen-barchart"></div>
                     <hr>
                     <div class="light region-subtitle">ACTIVE CHARACTERS*</div>
-                    <canvas id="canvas_population_japan_active" width="400" height="150"></canvas>
+                    <div id="div_population_japan_active" class="fullscreen-barchart"></div>
                 </div>
                 <div id="population_europe" class="col s12">
                     <div class="light region-subtitle">ALL CHARACTERS</div>
-                    <canvas id="canvas_population_europe_all" width="400" height="150"></canvas>
+                    <div id="div_population_europe_all" class="fullscreen-barchart"></div>
                     <hr>
                     <div class="light region-subtitle">ACTIVE CHARACTERS*</div>
-                    <canvas id="canvas_population_europe_active" width="400" height="150"></canvas>
+                    <div id="div_population_europe_active" class="fullscreen-barchart"></div>
                 </div>
               </div>
         </div>
