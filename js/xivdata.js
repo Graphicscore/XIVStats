@@ -99,6 +99,20 @@ function getData()
                 "role":"tank"
                 }
             ]
+        },
+        "grandcompany": {
+            "all": {
+                "immortalflames":133000,
+                "maelstrom":123000,
+                "twinadder":124000,
+                "none":600000
+            },
+            "active": {
+                "immortalflames":133000,
+                "maelstrom":123000,
+                "twinadder":124000,
+                "none": 1962
+            }
         }
     }
 }
@@ -132,11 +146,15 @@ $(function() {
 
     createJobChart($("#canvas_population_job_all")[0].getContext('2d'),data.jobs.all)
     createJobChart($("#canvas_population_job_active")[0].getContext('2d'),data.jobs.active)
+
+    createGrandCompanyChart($("#canvas_population_gc_all")[0].getContext('2d'),data.grandcompany.all)
+    createGrandCompanyChart($("#canvas_population_gc_active")[0].getContext('2d'),data.grandcompany.active)
 });
 
 
 function createBarChartOptions() {
     return {
+        grouped: true,
         plugins: {
             legend: {
                 position: 'bottom',
@@ -144,6 +162,9 @@ function createBarChartOptions() {
                     color: "#fff",
                     usePointStyle:true
                 }
+            },
+            tooltip: {
+                
             }
         },
         scales: {
@@ -166,6 +187,14 @@ function createBarChartOptions() {
                             separator: ''
                           })
                     }
+                },
+                title: {
+                    display: true,
+                    color: "#c3ac5c",
+                    font: {
+                        size: 16
+                    },
+                    text: "# of Characters"
                 }
             },
             x: {
@@ -186,6 +215,52 @@ function createBarChartOptions() {
             }
         }
     };
+}
+
+function getToolTipOptions() {
+    return {
+        xAlign: "center",
+        yAlign: "center" 
+      };
+}
+
+function createGrandCompanyChart(ctx, data){
+    var labels = ["None", "Immortal Flames", "Maelstrom", "Order of the Twin Adder"];
+    var values = [data.none, data.immortalflames, data.maelstrom, data.twinadder];
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                label: '# of Characters',
+                data: values,
+                backgroundColor: [
+                    'rgba(158, 158, 158)',
+                    'rgba(33, 33, 33)',
+                    'rgba(183, 28, 28)',
+                    'rgba(255, 193, 7)'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Chart.js Pie Chart'
+              },
+              tooltip: getToolTipOptions()
+            },
+            animation: {
+                animateScale: true,
+            }
+          }
+    });
 }
 
 function createGenderRaceChart(ctx,data){
