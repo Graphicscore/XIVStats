@@ -141,10 +141,10 @@ $(function() {
     createPopulationChart($("#div_population_europe_all")[0],data.realms.europe.all.distribution)
     createPopulationChart($("#div_population_europe_active")[0],data.realms.europe.active.distribution)
 
-    /*createGenderRaceChart($("#canvas_population_race_all")[0].getContext('2d'),data.racedistribution.all)
-    createGenderRaceChart($("#canvas_population_race_active")[0].getContext('2d'),data.racedistribution.active)
+    createGenderRaceChart($("#div_population_race_all")[0],data.racedistribution.all)
+    createGenderRaceChart($("#div_population_race_active")[0],data.racedistribution.active)
 
-    createJobChart($("#canvas_population_job_all")[0].getContext('2d'),data.jobs.all)
+    /*createJobChart($("#canvas_population_job_all")[0].getContext('2d'),data.jobs.all)
     createJobChart($("#canvas_population_job_active")[0].getContext('2d'),data.jobs.active)
 
     createGrandCompanyChart($("#canvas_population_gc_all")[0].getContext('2d'),data.grandcompany.all)
@@ -262,7 +262,7 @@ function createGrandCompanyChart(ctx, data){
     });
 }
 
-function createGenderRaceChart(ctx,data){
+function createGenderRaceChart(div,data){
     var labels = [];
     var valuesMale = [];
     var valuesFemale = [];
@@ -274,7 +274,7 @@ function createGenderRaceChart(ctx,data){
         valuesFemale.push(data[i].female);
     }
 
-    var myChart = new Chart(ctx, {
+    /*var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -296,7 +296,71 @@ function createGenderRaceChart(ctx,data){
             }]
         },
         options: createBarChartOptions()
-    });
+    });*/
+
+    var myChart = echarts.init(div);
+    var option;
+
+option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    textStyle: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 32,
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: labels,
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLabel: {
+                fontSize: 12,
+                interval: 0,
+                margin: 12
+            }
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            axisLabel: {
+                fontSize: 15,
+                formatter: function(value, index){
+                    return humanFormat(value, {
+                        separator: ''
+                    })
+                }
+            }
+        }
+    ],
+    series: [
+        {
+            name: '# of Females',
+            type: 'bar',
+            data: valuesFemale,
+            color: 'rgba(158, 0, 0)'
+        },
+        {
+            name: '# of Males',
+            type: 'bar',
+            data: valuesMale,
+            color: 'rgba(3, 155, 229)'
+        }
+    ]
+    };
+    option && myChart.setOption(option);
 }
 
 
