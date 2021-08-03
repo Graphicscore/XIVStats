@@ -62,9 +62,10 @@ class REALM implements \JsonSerializable {
     public function jsonSerialize()
     {
         return [
-            'name' => $this->name,
-            'all' => json_encode($this->all_realm_aggregation),
-            'active' => json_encode($this->active_realm_aggregation),
+            $this->name => [
+                'all' => json_encode($this->all_realm_aggregation),
+                'active' => json_encode($this->active_realm_aggregation),
+            ]
         ];
     }
 }
