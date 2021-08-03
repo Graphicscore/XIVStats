@@ -163,8 +163,8 @@ $(function() {
     createJobChart($("#div_population_job_all")[0],data.jobs.all)
     createJobChart($("#div_population_job_active")[0],data.jobs.active)
 
-    /*createGrandCompanyChart($("#canvas_population_gc_all")[0].getContext('2d'),data.grandcompany.all)
-    createGrandCompanyChart($("#canvas_population_gc_active")[0].getContext('2d'),data.grandcompany.active)*/
+    createGrandCompanyChart($("#div_population_gc_all")[0],data.grandcompany.all)
+    createGrandCompanyChart($("#div_population_gc_active")[0],data.grandcompany.active)
 });
 });
 
@@ -240,43 +240,56 @@ function getToolTipOptions() {
       };
 }
 
-function createGrandCompanyChart(ctx, data){
+function createGrandCompanyChart(div, data){
     var labels = ["None", "Immortal Flames", "Maelstrom", "Order of the Twin Adder"];
     var values = [data.none, data.immortalflames, data.maelstrom, data.twinadder];
-    var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                label: '# of Characters',
-                data: values,
-                backgroundColor: [
-                    'rgba(158, 158, 158)',
-                    'rgba(33, 33, 33)',
-                    'rgba(183, 28, 28)',
-                    'rgba(255, 193, 7)'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top',
-              },
-              title: {
-                display: true,
-                text: 'Chart.js Pie Chart'
-              },
-              tooltip: getToolTipOptions()
-            },
-            animation: {
-                animateScale: true,
+    var colors = [
+        'rgba(158, 158, 158)',
+        'rgba(33, 33, 33)',
+        'rgba(183, 28, 28)',
+        'rgba(255, 193, 7)'
+    ]
+
+    var vv = [];
+    for(var index = 0; index < values.length; index++){
+        var valueobj = {
+            "value": values[index],
+            "name": labels[index],
+            "itemStyle": {
+                "color": colors[index]
             }
-          }
-    });
+        };
+        vv.push(valueobj);
+    }
+
+    option = {
+        tooltip: {
+            trigger: 'item'
+        },
+        textStyle: {
+            color: "#fff"
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '80%',
+                data: vv,
+                label: {
+                    color: '#fff'
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    var myChart = echarts.init(div);
+    option && myChart.setOption(option);
 }
 
 function createGenderRaceChart(div,data){
