@@ -13,6 +13,22 @@ function demo_generateDistributionData(){
     return dist;
 }
 
+function getDataFromUrl(callback) {
+    var jqxhr = $.getJSON( "/data/xivdata.json", function() {
+        console.log( "success" );
+      })
+      .done(function(json) {
+         console.log( "second success" );
+         callback(json)
+       })
+        .fail(function() {
+          console.log( "error" );
+        })
+        .always(function() {
+          console.log( "complete" );
+        });      
+}
+
 function getData()
 {
     return {
@@ -119,7 +135,7 @@ function getData()
 
 //on document ready
 $(function() {
-    var data = getData();
+    getDataFromUrl(function(data){
     console.log(data);
     $("#label_player_count").text(data.characters.all.toLocaleString('en'));
     $("#label_active_player_count").text(data.characters.active.toLocaleString('en'));
@@ -144,11 +160,12 @@ $(function() {
     createGenderRaceChart($("#div_population_race_all")[0],data.racedistribution.all)
     createGenderRaceChart($("#div_population_race_active")[0],data.racedistribution.active)
 
-    /*createJobChart($("#canvas_population_job_all")[0].getContext('2d'),data.jobs.all)
-    createJobChart($("#canvas_population_job_active")[0].getContext('2d'),data.jobs.active)
+    createJobChart($("#div_population_job_all")[0],data.jobs.all)
+    createJobChart($("#div_population_job_active")[0],data.jobs.active)
 
-    createGrandCompanyChart($("#canvas_population_gc_all")[0].getContext('2d'),data.grandcompany.all)
+    /*createGrandCompanyChart($("#canvas_population_gc_all")[0].getContext('2d'),data.grandcompany.all)
     createGrandCompanyChart($("#canvas_population_gc_active")[0].getContext('2d'),data.grandcompany.active)*/
+});
 });
 
 function createBarChartOptions() {
@@ -274,30 +291,6 @@ function createGenderRaceChart(div,data){
         valuesFemale.push(data[i].female);
     }
 
-    /*var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                label: '# of Males',
-                data: valuesMale,
-                backgroundColor: [
-                    'rgba(3, 155, 229)'
-                ],
-                borderWidth: 0
-            }, {
-                label: '# of Females',
-                data: valuesFemale,
-                backgroundColor: [
-                    'rgba(158, 0, 0)'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: createBarChartOptions()
-    });*/
-
     var myChart = echarts.init(div);
     var option;
 
@@ -308,8 +301,15 @@ option = {
             type: 'shadow'
         }
     },
+    legend: {
+        data: ['# of Females', '# of Males'],
+        textStyle: {
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: 16
+        }
+    },
     textStyle: {
-        color: 'rgba(255, 255, 255, 0.7)',
+        color: 'rgba(255, 255, 255, 0.9)',
         fontSize: 32,
     },
     grid: {
@@ -437,48 +437,97 @@ option = {
 option && myChart.setOption(option);
 }
 
-function createJobChart(ctx, jobData){
+function createJobChart(div, jobData){
     var labels = [];
     var values = [];
-    var colors = [];
+    //var colors = [];
 
     for(var i = 0; i < jobData.length; i++)
     {
         labels.push(jobData[i].name);
-        values.push(jobData[i].count);
+        var vv = {}
+        vv.value = jobData[i].count;
+        vv.itemStyle = {};
         switch(jobData[i].role){
             case "tank":
-                colors.push('rgb(61, 81, 177)')
+                vv.itemStyle.color = 'rgb(61, 81, 177)';
                 break;
             case "dps":
-                colors.push('rgb(120, 53, 54)')
+                vv.itemStyle.color = 'rgb(120, 53, 54)';
                 break;
             case "healer":
-                colors.push('rgb(61, 104, 48)')
+                vv.itemStyle.color = 'rgb(61, 104, 48)';
                 break;
-            case "crafter":
-                colors.push('rgb(103, 78, 160)')
+            case "crafting":
+                vv.itemStyle.color = 'rgb(103, 78, 160)';
                 break;
-            case "gatherer":
-                colors.push('rgb(168, 141, 59)')
+            case "gathering":
+                vv.itemStyle.color = 'rgb(168, 141, 59)';
                 break;
             default:
-                colors.push('rgb(0,0,0)')
+                vv.itemStyle.color = 'rgb(0,0,0)';
                 break;
         }
+        values.push(vv);
     }
 
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: '# of Characters',
-                data: values,
-                backgroundColor: colors,
-                borderWidth: 0
-            }]
-        },
-        options: createBarChartOptions()
-    });
+    var myChart = echarts.init(div);
+    var option;
+
+option = {
+    //color: colors,
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    textStyle: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 32,
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: labels,
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLabel: {
+                fontSize: 12,
+                rotate: 30,
+                interval: 0,
+                margin: 12
+            }
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            axisLabel: {
+                fontSize: 15,
+                formatter: function(value, index){
+                    return humanFormat(value, {
+                        separator: ''
+                    })
+                }
+            }
+        }
+    ],
+    series: [
+        {
+            name: '# of Characters',
+            type: 'bar',
+            barWidth: '60%',
+            data: values,
+        }
+    ]
+};
+option && myChart.setOption(option);
 }
