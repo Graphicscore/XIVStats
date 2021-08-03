@@ -117,3 +117,11 @@ class RACE_POPULATION implements \JsonSerializable {
         ];
     }
 }
+    public function jsonSerialize()
+    {
+        return [
+            'all' => json_encode($this->all_population),
+            'active' => json_encode($this->active_population),
+        ];
+    }
+}
