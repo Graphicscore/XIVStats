@@ -117,6 +117,50 @@ class RACE_POPULATION implements \JsonSerializable {
         ];
     }
 }
+
+class JOB_POPULATION_ENTRY {
+    public $name;
+    public $count;
+    public $role;
+
+    public function __construct($name, $count, $role){
+        $this->name = $name;
+        $this->count = $count;
+        $this->role = $role;
+    }
+}
+
+class JOB_POPULATION implements \JsonSerializable{
+    public $all_population;
+    public $active_population;
+
+    public function __construct($all_population, $active_population){
+        $this->all_population = $all_population;
+        $this->active_population = $active_population;
+    }
+
+    public static function Create($all_classes, $active_classes){
+        $all = [];
+        $active = [];
+        foreach ($all_classes as $key => $value) {
+            $name = $value["TYPE"]["TITLE"];
+            $count = $value["COUNT"];
+            $role = $value["TYPE"]["ROLE"];
+            $pop = new JOB_POPULATION_ENTRY($name,$count,$role);
+            array_push($all,$pop);
+        };
+
+        foreach ($active_classes as $key => $value) {
+            $name = $value["TYPE"]["TITLE"];
+            $count = $value["COUNT"];
+            $role = $value["TYPE"]["ROLE"];
+            $pop = new JOB_POPULATION_ENTRY($name,$count,$role);
+            array_push($active,$pop);
+        };
+
+        return new JOB_POPULATION($all,$active);
+    }
+
     public function jsonSerialize()
     {
         return [
