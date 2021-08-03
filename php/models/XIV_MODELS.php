@@ -169,3 +169,50 @@ class JOB_POPULATION implements \JsonSerializable{
         ];
     }
 }
+
+class GRAND_COMPANY_POPULATION_ENTRY {
+    public $immortalflames;
+    public $maelstrom;
+    public $twinadder;
+    public $none;
+    public function __construct($immortalflames,$maelstrom,$twinadder,$none) {
+        $this->immortalflames = $immortalflames;
+        $this->maelstrom = $maelstrom;
+        $this->twinadder = $twinadder;
+        $this->none = $none;
+    }
+}
+
+class GRAND_COMPANY_POPULATION implements \JsonSerializable {
+    public $all_population;
+    public $active_population;
+
+    public function __construct($all_population, $active_population){
+        $this->all_population = $all_population;
+        $this->active_population = $active_population;
+    }
+
+    public static function Create($all_grandcompany, $active_grandcompany){
+        $all = new GRAND_COMPANY_POPULATION_ENTRY(
+            $all_grandcompany["Immortal Flames"],
+            $all_grandcompany["Maelstrom"],
+            $all_grandcompany["Order of the Twin Adder"],
+            $all_grandcompany["none"]
+        );
+        $active = new GRAND_COMPANY_POPULATION_ENTRY(
+            $active_grandcompany["Immortal Flames"],
+            $active_grandcompany["Maelstrom"],
+            $active_grandcompany["Order of the Twin Adder"],
+            $active_grandcompany["none"]
+        );
+        return new GRAND_COMPANY_POPULATION($all,$active);
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'all' => json_encode($this->all_population),
+            'active' => json_encode($this->active_population),
+        ];
+    }
+}

@@ -484,6 +484,8 @@ $race = RACE_POPULATION::Create($race_gender_count,$active_race_gender_count);
 
 $jobs = JOB_POPULATION::Create($classes,$active_classes);
 
+$grand_company = GRAND_COMPANY_POPULATION::Create($gc_count,$active_gc_count);
+
 $tmp = json_encode($race);
 
 echo $tmp;
