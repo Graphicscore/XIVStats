@@ -62,11 +62,21 @@ class REALM implements \JsonSerializable {
     public function jsonSerialize()
     {
         return [
-            $this->name => [
-                'all' => json_encode($this->all_realm_aggregation),
-                'active' => json_encode($this->active_realm_aggregation),
-            ]
+                'all' => $this->all_realm_aggregation,
+                'active' => $this->active_realm_aggregation,
         ];
+    }
+}
+
+class REALM_CONTAINER {
+    public $america;
+    public $japan;
+    public $europe;
+
+    public function __construct($america,$japan,$europe) {
+        $this->america = $america;
+        $this->japan = $japan;
+        $this->europe = $europe;
     }
 }
 
@@ -112,8 +122,8 @@ class RACE_POPULATION implements \JsonSerializable {
     public function jsonSerialize()
     {
         return [
-            'all' => json_encode($this->all_population),
-            'active' => json_encode($this->active_population),
+            'all' => $this->all_population,
+            'active' => $this->active_population,
         ];
     }
 }
@@ -164,8 +174,8 @@ class JOB_POPULATION implements \JsonSerializable{
     public function jsonSerialize()
     {
         return [
-            'all' => json_encode($this->all_population),
-            'active' => json_encode($this->active_population),
+            'all' => $this->all_population,
+            'active' => $this->active_population,
         ];
     }
 }
@@ -211,8 +221,8 @@ class GRAND_COMPANY_POPULATION implements \JsonSerializable {
     public function jsonSerialize()
     {
         return [
-            'all' => json_encode($this->all_population),
-            'active' => json_encode($this->active_population),
+            'all' => $this->all_population,
+            'active' => $this->active_population,
         ];
     }
 }
