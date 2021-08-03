@@ -1,6 +1,8 @@
 <?php
 
 include './constans.php';
+include './models/XIV_MODELS.php';
+include './models/XIV_DATA.php';
 
 // Helper function to fetch the sum of all values in the array, where the array key matches one of the specified realm names
 function sumInRegion($data, $regional_realms) {
@@ -449,14 +451,11 @@ $gen_active_realm_europe = sumInRegion($active_realm_count, $european_realm_arra
 
 
 
-include './models/XIV_MODELS.php';
-
-
-$stats = new CHARACTERS($player_count,$active_player_count,$deleted_player_count);
+$characters = new CHARACTERS($player_count,$active_player_count,$deleted_player_count);
 
 
 
-$american_realm = new REALM("America", new REALM_AGGREGATION(
+$american_realm = new REALM("america", new REALM_AGGREGATION(
     sumInRegion($realm_count, $american_realm_array),
     REALM_POPULATION::Create($american_realm_array, $realm_count)
 ), new REALM_AGGREGATION(
@@ -464,7 +463,7 @@ $american_realm = new REALM("America", new REALM_AGGREGATION(
     REALM_POPULATION::Create($american_realm_array, $active_realm_count)
 ));
 
-$japanese_realm = new REALM("Japan", new REALM_AGGREGATION(
+$japanese_realm = new REALM("japan", new REALM_AGGREGATION(
     sumInRegion($realm_count, $japanese_realm_array),
     REALM_POPULATION::Create($japanese_realm_array, $realm_count)
 ), new REALM_AGGREGATION(
@@ -472,7 +471,7 @@ $japanese_realm = new REALM("Japan", new REALM_AGGREGATION(
     REALM_POPULATION::Create($japanese_realm_array, $active_realm_count)
 ));
 
-$euopean_realm = new REALM("Europe", new REALM_AGGREGATION(
+$european_realm = new REALM("europe", new REALM_AGGREGATION(
     sumInRegion($realm_count, $european_realm_array),
     REALM_POPULATION::Create($european_realm_array, $realm_count)
 ), new REALM_AGGREGATION(
@@ -486,6 +485,14 @@ $jobs = JOB_POPULATION::Create($classes,$active_classes);
 
 $grand_company = GRAND_COMPANY_POPULATION::Create($gc_count,$active_gc_count);
 
-$tmp = json_encode($race);
+$xivdata = new XIV_DATA();
+$xivdata->characters = $characters;
+$xivdata->race_popuation = $race;
+$xivdata->realms = new REALM_CONTAINER($american_realm,$japanese_realm,$european_realm);
+$xivdata->job_population = $jobs;
+$xivdata->grandcompany_population = $grand_company;
 
-echo $tmp;
+$tmp = json_encode($xivdata, JSON_PRETTY_PRINT);
+file_put_contents("../data/xivdata.pretty.json",$tmp);
+$tmp = json_encode($xivdata);
+file_put_contents("../data/xivdata.json",$tmp);
