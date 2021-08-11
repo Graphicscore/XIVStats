@@ -308,12 +308,7 @@ function createGenderRaceChart(div,data){
     var option;
 
 option = {
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'shadow'
-        }
-    },
+    tooltip: createBarChartTooltip(),
     legend: {
         data: ['# of Females', '# of Males'],
         textStyle: {
@@ -364,12 +359,7 @@ function createPopulationChart(div, populationData)
 
 option = {
     color: ["rgba(112, 38, 112)"],
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'shadow'
-        }
-    },
+    tooltip: createBarChartTooltip(),
     textStyle: {
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 32,
@@ -428,12 +418,7 @@ function createJobChart(div, jobData){
 
 option = {
     //color: colors,
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'shadow'
-        }
-    },
+    tooltip: createBarChartTooltip(),
     textStyle: {
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 32,
@@ -494,4 +479,13 @@ function createXAxis(labels, rotateLabels){
             }
         }
     ]
+}
+
+function createBarChartTooltip() {
+    return {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    }
 }
