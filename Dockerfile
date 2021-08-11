@@ -14,7 +14,8 @@ COPY ./docker/docker_entrypoint.sh /app/docker_entrypoint.sh
 COPY ./docker/default.vhost /etc/nginx/sites-enabled/default
 WORKDIR /app
 RUN chmod 755 create_template_ini.sh
-RUN chmod 755 /app/docker_entrypoint.sh
+RUN chmod 755 docker_entrypoint.sh
+RUN mkdir data
 
 EXPOSE 8080
 
