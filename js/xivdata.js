@@ -325,39 +325,9 @@ option = {
         color: 'rgba(255, 255, 255, 0.9)',
         fontSize: 32,
     },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis: [
-        {
-            type: 'category',
-            data: labels,
-            axisTick: {
-                alignWithLabel: true
-            },
-            axisLabel: {
-                fontSize: 12,
-                interval: 0,
-                margin: 12
-            }
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            axisLabel: {
-                fontSize: 15,
-                formatter: function(value, index){
-                    return humanFormat(value, {
-                        separator: ''
-                    })
-                }
-            }
-        }
-    ],
+    grid: createBarChartGrid(),
+    xAxis: createXAxis(labels, false),
+    yAxis: createYAxis(),
     series: [
         {
             name: '# of Females',
@@ -404,40 +374,9 @@ option = {
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 32,
     },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis: [
-        {
-            type: 'category',
-            data: labels,
-            axisTick: {
-                alignWithLabel: true
-            },
-            axisLabel: {
-                fontSize: 12,
-                rotate: 30,
-                interval: 0,
-                margin: 12
-            }
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            axisLabel: {
-                fontSize: 15,
-                formatter: function(value, index){
-                    return humanFormat(value, {
-                        separator: ''
-                    })
-                }
-            }
-        }
-    ],
+    grid: createBarChartGrid(),
+    xAxis: createXAxis(labels,true),
+    yAxis: createYAxis(),
     series: [
         {
             name: '# of Characters',
@@ -499,28 +438,23 @@ option = {
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 32,
     },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis: [
+    grid: createBarChartGrid(),
+    xAxis: createXAxis(labels,true),
+    yAxis: createYAxis(),
+    series: [
         {
-            type: 'category',
-            data: labels,
-            axisTick: {
-                alignWithLabel: true
-            },
-            axisLabel: {
-                fontSize: 12,
-                rotate: 30,
-                interval: 0,
-                margin: 12
-            }
+            name: '# of Characters',
+            type: 'bar',
+            barWidth: '60%',
+            data: values,
         }
-    ],
-    yAxis: [
+    ]
+};
+option && myChart.setOption(option);
+}
+
+function createYAxis() {
+    return [
         {
             type: 'value',
             axisLabel: {
@@ -532,15 +466,32 @@ option = {
                 }
             }
         }
-    ],
-    series: [
+    ];
+}
+
+function createBarChartGrid() {
+    return {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    }
+}
+
+function createXAxis(labels, rotateLabels){
+    return [
         {
-            name: '# of Characters',
-            type: 'bar',
-            barWidth: '60%',
-            data: values,
+            type: 'category',
+            data: labels,
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLabel: {
+                fontSize: 12,
+                interval: 0,
+                rotate: rotateLabels ? 30 : 0,
+                margin: 12
+            }
         }
     ]
-};
-option && myChart.setOption(option);
 }
