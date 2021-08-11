@@ -8,7 +8,7 @@ server {
     root /app/;
     index index.html;
 
-    location ~* \.(html|css|jpg|jpeg|gif|png)$ {
+    location ~* \.(html|js|json|css|jpg|jpeg|gif|png)$ {
             try_files $uri $uri/ =404;
     }
 
