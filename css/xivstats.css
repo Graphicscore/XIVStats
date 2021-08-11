@@ -170,7 +170,7 @@ ul > .tab:not(:first-child):not(:nth-child(3)) {
 div.sticky {
     position: -webkit-sticky; /* Safari */
     position: fixed;
-    bottom: 0;
+    bottom: 50;
     z-index: 99;
     width: 100%;
 }
@@ -181,6 +181,7 @@ div.infobox-center {
     background-color:#b96363;
     padding-bottom:10px;
     padding-top:18px;
+    border-radius: 10px;
 }
 
 .infobox-content > p {

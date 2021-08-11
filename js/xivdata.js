@@ -137,6 +137,13 @@ function getData()
 $(function() {
     getDataFromUrl(function(data){
     console.log(data);
+
+    if(true)//gathering is in process
+    {
+        var progress = (data.characters.all / 50000000.0); //temporary until this is provided by the backend
+        $("#infobox-progress-label").text("Progress: " + parseFloat(progress.toFixed(4)) + "%");
+    }
+
     $("#label_player_count").text(data.characters.all.toLocaleString('en'));
     $("#label_active_player_count").text(data.characters.active.toLocaleString('en'));
 
