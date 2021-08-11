@@ -166,3 +166,29 @@ ul > .tab:not(:first-child):not(:nth-child(3)) {
     width: 100%;
     height: 400px;
 }
+
+div.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: fixed;
+    bottom: 0;
+    z-index: 99;
+    width: 100%;
+}
+
+div.infobox-center {
+    margin: auto;
+    width: 27%;
+    background-color:#b96363;
+    padding-bottom:10px;
+    padding-top:18px;
+}
+
+.infobox-content > p {
+    margin: 0;
+}
+
+.infobox-content {
+    padding-left: 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
