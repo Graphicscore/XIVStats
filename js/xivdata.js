@@ -165,9 +165,10 @@ $(function() {
 
     createGrandCompanyChart($("#div_population_gc_all")[0],data.grandcompany.all)
     createGrandCompanyChart($("#div_population_gc_active")[0],data.grandcompany.active)
-});
-});
 
+    createBeastTribesChart($("#div_beast_tribes")[0],data.beasttribes)
+});
+});
 
 function createGrandCompanyChart(div, data){
     var labels = ["None", "Immortal Flames", "Maelstrom", "Order of the Twin Adder"];
@@ -347,6 +348,42 @@ function createJobChart(div, jobData){
 
 option = {
     //color: colors,
+    tooltip: createBarChartTooltip(),
+    textStyle: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 32,
+    },
+    grid: createBarChartGrid(),
+    xAxis: createXAxis(labels,true),
+    yAxis: createYAxis(),
+    series: [
+        {
+            name: '# of Characters',
+            type: 'bar',
+            barWidth: '60%',
+            data: values,
+        }
+    ]
+};
+option && myChart.setOption(option);
+}
+
+function createBeastTribesChart(div, tribesData)
+{
+
+    var labels = [];
+    var values = [];
+
+    for(var tribe in tribesData) {
+        labels.push(tribe);
+        values.push(tribesData[tribe]);
+    }
+
+    var myChart = echarts.init(div);
+    var option;
+
+option = {
+    color: ["rgba(112, 38, 112)"],
     tooltip: createBarChartTooltip(),
     textStyle: {
         color: 'rgba(255, 255, 255, 0.7)',
