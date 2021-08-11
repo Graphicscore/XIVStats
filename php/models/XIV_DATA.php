@@ -5,6 +5,7 @@ class XIV_DATA implements \JsonSerializable{
     public $realms; //REALM[]
     public $job_population; //JOB_POPULATION
     public $grandcompany_population;
+    public $beast_tribes;
     public function jsonSerialize()
     {
         return [
@@ -12,7 +13,8 @@ class XIV_DATA implements \JsonSerializable{
             'racedistribution' => $this->race_popuation,
             'realms' => $this->realms,
             'jobs' => $this->job_population,
-            'grandcompany' => $this->grandcompany_population
+            'grandcompany' => $this->grandcompany_population,
+            'beasttribes' => $this->beast_tribes
         ];
     }
 }

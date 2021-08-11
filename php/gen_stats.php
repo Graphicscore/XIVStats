@@ -356,7 +356,7 @@ while($row = $player_overview_query->fetch_assoc()) {
 	$beast_tribes["Ananta"] += in_array("Wind-up Ananta", $minions) ? 1 : 0;
 	$beast_tribes["Namazu"] += in_array("Attendee #777", $minions) ? 1 : 0;
     $beast_tribes["Pixie"] += in_array("Wind-up Pixie", $minions) ? 1 : 0;
-    $beast_tribes["Qitari"] += in_array("The Behelmeted Serpent of Ronka", $minions) ? 1 : 0;
+    $beast_tribes["Qitari"] += in_array("The Behelmeted Serpent Of Ronka", $minions) ? 1 : 0;
     $beast_tribes["Dwarf"] += in_array("Lalinator 5.H0", $minions) ? 1 : 0;
   
     // Fetch total number of active players in database by checking for the Wind-up Mystel minion received during 5.3 MSQ
@@ -491,6 +491,7 @@ $xivdata->race_popuation = $race;
 $xivdata->realms = new REALM_CONTAINER($american_realm,$japanese_realm,$european_realm);
 $xivdata->job_population = $jobs;
 $xivdata->grandcompany_population = $grand_company;
+$xivdata->beast_tribes = $beast_tribes;
 
 $tmp = json_encode($xivdata, JSON_PRETTY_PRINT);
 file_put_contents("../data/xivdata.pretty.json",$tmp);
