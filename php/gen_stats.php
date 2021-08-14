@@ -338,7 +338,20 @@ while($row = $player_overview_query->fetch_assoc()) {
     $beast_tribes["Dwarf"] += in_array("Lalinator 5.H0", $minions) ? 1 : 0;
   
     // Fetch total number of active players in database by checking for the Wind-up Mystel minion received during 5.3 MSQ
-    if(in_array("Wind-up Mystel", $minions)) {  $active_player_count++;
+    $is_active = false;
+
+    if(in_array("Wind-up Mystel", $minions)) {
+        $is_active = true;
+    } else {
+        $lastModifiedDate = new \DateTime($row["date_active"]);
+        $now = new \DateTime();
+        if($lastModifiedDate->diff($now)->days < 31) {
+            $is_active = true;
+        }
+    }
+
+    if($is_active){//in_array("Wind-up Mystel", $minions)) {  
+        $active_player_count++;
         // Fetch realm active player count
         if(!array_key_exists($realm, $active_realm_count)) {
                 $active_realm_count[$realm] = 0;
