@@ -144,16 +144,17 @@ $active_gear = array();
 $gear_ilevel = 0;
 $active_gear_ilevel = 0;
 
-$prearr = 0;
-$prehw = 0;
-$presb = 0;
-$preshb = 0;
-$preendwalker = 0;
+$pre_arealmreborn = 0;
+$pre_heavensward = 0;
+$pre_stormblod = 0;
+$pre_shadowbringers = 0;
+$pre_endwalker = 0;
+
 $ps4_collectors = 0;
 $pc_collectors = 0;
-$hw_collectors = 0;
-$sb_collectors = 0;
-$shb_collectors = 0;
+$heavensward_collectors = 0;
+$stormblood_collectors = 0;
+$shadowbringers_collectors = 0;
 $endwalker_collectors = 0;
 $arrartbook = 0;
 $sbartbook = 0;
@@ -275,30 +276,19 @@ while($row = $player_overview_query->fetch_assoc()) {
 
 
     // Pre-orders
-    $prearr += isset($row["prearr"]) && $row["prearr"] == 1 ? 1 : 0;
-    $fmt_prearr = number_format($prearr);
-    $prehw += isset($row["prehw"]) && $row["prehw"] == 1 ? 1 : 0;
-    $fmt_prehw = number_format($prehw);
-    $presb += isset($row["presb"]) && $row["presb"] == 1 ? 1 : 0;
-    $fmt_presb = number_format($presb);
-    $preshb += isset($row["preshb"]) && $row["preshb"] == 1 ? 1 : 0;
-    $fmt_preshb = number_format($preshb);
-    $preendwalker += in_array("Wind-up Palom",$minions) ? 1 : 0;
-    $fmt_pre_endwalker = number_format($preendwalker);
+    $pre_arealmreborn += isset($row["prearr"]) && $row["prearr"] == 1 ? 1 : 0;
+    $pre_heavensward += isset($row["prehw"]) && $row["prehw"] == 1 ? 1 : 0;
+    $pre_stormblod += isset($row["presb"]) && $row["presb"] == 1 ? 1 : 0;
+    $pre_shadowbringers += isset($row["preshb"]) && $row["preshb"] == 1 ? 1 : 0;
+    $pre_endwalker += in_array("Wind-up Palom",$minions) ? 1 : 0;
 
     // Collectors Edition
     $ps4_collectors += isset($row["ps4collectors"]) && $row["ps4collectors"] == 1 ? 1 : 0;
-    $fmt_ps4_collectors = number_format($ps4_collectors);
     $pc_collectors += isset($row["arrcollector"]) && $row["arrcollector"] == 1 ? 1 : 0;
-    $fmt_pc_collectors = number_format($pc_collectors);
-    $hw_collectors += in_array("Wind-up Kain", $minions) ? 1 : 0;
-    $fmt_hw_collectors = number_format($hw_collectors);
-    $sb_collectors += in_array("Wind-up Bartz", $minions) ? 1 : 0;
-    $fmt_sb_collectors = number_format($sb_collectors);
-    $shb_collectors += in_array("Grani", $mounts) ? 1 : 0;
-    $fmt_shb_collectors = number_format($shb_collectors);
+    $heavensward_collectors += in_array("Wind-up Kain", $minions) ? 1 : 0;
+    $stormblood_collectors += in_array("Wind-up Bartz", $minions) ? 1 : 0;
+    $shadowbringers_collectors += in_array("Grani", $mounts) ? 1 : 0;
     $endwalker_collectors += in_array("Wind-up Porom", $minions) ? 1 : 0;
-    $fmt_endwalker_collectors = number_format($endwalker_collectors);
 
     // Physical Items
     $arrartbook += isset($row["arrartbook"]) && $row["arrartbook"] == 1 ? 1 : 0;
