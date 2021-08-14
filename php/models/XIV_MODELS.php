@@ -226,3 +226,25 @@ class GRAND_COMPANY_POPULATION implements \JsonSerializable {
         ];
     }
 }
+
+class META_AGGREGATION {
+    public $total_characters;
+    public $progressed_characters;
+    public $active;
+}
+
+class META implements \JsonSerializable {
+    public META_AGGREGATION $aggregation_data;
+
+    public function __construct()
+    {
+        $this->aggregation_data = new META_AGGREGATION();
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'aggregation' => $this->aggregation_data,
+        ];
+    }
+}

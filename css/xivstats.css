@@ -193,3 +193,7 @@ div.infobox-center {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.hidden {
+    visibility: hidden;
+}
