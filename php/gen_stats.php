@@ -144,16 +144,17 @@ $active_gear = array();
 $gear_ilevel = 0;
 $active_gear_ilevel = 0;
 
-$prearr = 0;
-$prehw = 0;
-$presb = 0;
-$preshb = 0;
-$preendwalker = 0;
+$pre_arealmreborn = 0;
+$pre_heavensward = 0;
+$pre_stormblod = 0;
+$pre_shadowbringers = 0;
+$pre_endwalker = 0;
+
 $ps4_collectors = 0;
 $pc_collectors = 0;
-$hw_collectors = 0;
-$sb_collectors = 0;
-$shb_collectors = 0;
+$heavensward_collectors = 0;
+$stormblood_collectors = 0;
+$shadowbringers_collectors = 0;
 $endwalker_collectors = 0;
 $arrartbook = 0;
 $sbartbook = 0;
@@ -275,64 +276,41 @@ while($row = $player_overview_query->fetch_assoc()) {
 
 
     // Pre-orders
-    $prearr += isset($row["prearr"]) && $row["prearr"] == 1 ? 1 : 0;
-    $fmt_prearr = number_format($prearr);
-    $prehw += isset($row["prehw"]) && $row["prehw"] == 1 ? 1 : 0;
-    $fmt_prehw = number_format($prehw);
-    $presb += isset($row["presb"]) && $row["presb"] == 1 ? 1 : 0;
-    $fmt_presb = number_format($presb);
-    $preshb += isset($row["preshb"]) && $row["preshb"] == 1 ? 1 : 0;
-    $fmt_preshb = number_format($preshb);
-    $preendwalker += in_array("Wind-up Palom",$minions) ? 1 : 0;
-    $fmt_pre_endwalker = number_format($preendwalker);
+    $pre_arealmreborn += isset($row["prearr"]) && $row["prearr"] == 1 ? 1 : 0;
+    $pre_heavensward += isset($row["prehw"]) && $row["prehw"] == 1 ? 1 : 0;
+    $pre_stormblod += isset($row["presb"]) && $row["presb"] == 1 ? 1 : 0;
+    $pre_shadowbringers += isset($row["preshb"]) && $row["preshb"] == 1 ? 1 : 0;
+    $pre_endwalker += in_array("Wind-up Palom",$minions) ? 1 : 0;
 
     // Collectors Edition
     $ps4_collectors += isset($row["ps4collectors"]) && $row["ps4collectors"] == 1 ? 1 : 0;
-    $fmt_ps4_collectors = number_format($ps4_collectors);
     $pc_collectors += isset($row["arrcollector"]) && $row["arrcollector"] == 1 ? 1 : 0;
-    $fmt_pc_collectors = number_format($pc_collectors);
-    $hw_collectors += in_array("Wind-up Kain", $minions) ? 1 : 0;
-    $fmt_hw_collectors = number_format($hw_collectors);
-    $sb_collectors += in_array("Wind-up Bartz", $minions) ? 1 : 0;
-    $fmt_sb_collectors = number_format($sb_collectors);
-    $shb_collectors += in_array("Grani", $mounts) ? 1 : 0;
-    $fmt_shb_collectors = number_format($shb_collectors);
+    $heavensward_collectors += in_array("Wind-up Kain", $minions) ? 1 : 0;
+    $stormblood_collectors += in_array("Wind-up Bartz", $minions) ? 1 : 0;
+    $shadowbringers_collectors += in_array("Grani", $mounts) ? 1 : 0;
     $endwalker_collectors += in_array("Wind-up Porom", $minions) ? 1 : 0;
-    $fmt_endwalker_collectors = number_format($endwalker_collectors);
 
     // Physical Items
     $arrartbook += isset($row["arrartbook"]) && $row["arrartbook"] == 1 ? 1 : 0;
-    $fmt_arrartbook = number_format($arrartbook);
     $beforemeteor += isset($row["beforemeteor"]) && $row["beforemeteor"] == 1 ? 1 : 0;
-    $fmt_beforemeteor = number_format($beforemeteor);
     $beforethefall += isset($row["beforethefall"]) && $row["beforethefall"] == 1 ? 1 : 0;
-    $fmt_beforethefall = number_format($beforethefall);
     $soundtrack += isset($row["soundtrack"]) && $row["soundtrack"] == 1 ? 1 : 0;
-    $fmt_soundtrack = number_format($soundtrack);
     $moogleplush += isset($row["moogleplush"]) && $row["moogleplush"] == 1 ? 1 : 0;
-    $fmt_moogleplush = number_format($moogleplush);
     $sbartbook += isset($row["sbartbook"]) && $row["sbartbook"] == 1 ? 1 : 0;
-    $fmt_sbartbook = number_format($sbartbook);
     $sbartbooktwo += isset($row["sbartbooktwo"]) && $row["sbartbooktwo"] == 1 ? 1 : 0;
-    $fmt_sbartbooktwo = number_format($sbartbooktwo);
 
     // Eternal Bond
     $saw_eternal_bond += isset($row["saweternalbond"]) && $row["saweternalbond"] == 1 ? 1 : 0;
-    $fmt_saw_eternal_bond = number_format($saw_eternal_bond);
     $did_eternal_bond += isset($row["dideternalbond"]) && $row["dideternalbond"] == 1 ? 1 : 0;
-    $fmt_did_eternal_bond = number_format($did_eternal_bond);
 
     // Player Commendations
     $comm50 += isset($row["comm50"]) && $row["comm50"] == 1 ? 1 : 0;
-    $fmt_comm50 = number_format($comm50);
 
     // Hildibrand
     $hildibrand += isset($row["hildibrand"]) && $row["hildibrand"] == 1 ? 1 : 0;
-    $fmt_hildibrand = number_format($hildibrand);
 
     // ARR Sightseeing Log
     $sightseeing += isset($row["sightseeing"]) && $row["sightseeing"] == 1 ? 1 : 0;
-    $fmt_sightseeing = number_format($sightseeing);
 
     // Ocean Fishing
     $oceanfishing_5k += in_array("The Major-General", $minions) == 1 ? 1 : 0;
@@ -485,6 +463,25 @@ $jobs = JOB_POPULATION::Create($classes,$active_classes);
 
 $grand_company = GRAND_COMPANY_POPULATION::Create($gc_count,$active_gc_count);
 
+$game_editions = [
+    'pre_orders' => [
+        'arr' => $pre_arealmreborn,
+        'heavensward' => $pre_heavensward,
+        'stormblood' => $pre_stormblod,
+        'shadowbringers' => $pre_shadowbringers,
+        'endwalker' => $pre_endwalker
+    ],
+    'collectors' => [
+        'arr_pc' => $pc_collectors,
+        'arr_ps4' => $ps4_collectors,
+        'heavensward' => $heavensward_collectors,
+        'stormblood' => $stormblood_collectors,
+        'shadowbringers' => $shadowbringers_collectors,
+        'endwalker' => $endwalker_collectors
+    ]
+];
+
+
 $meta_data = new META();
 
 $meta_data->aggregation_data->total_characters = 50000000; //currently hardcoded as an approximate value, this should be moved into the databse
@@ -498,6 +495,7 @@ $xivdata->realms = new REALM_CONTAINER($american_realm,$japanese_realm,$european
 $xivdata->job_population = $jobs;
 $xivdata->grandcompany_population = $grand_company;
 $xivdata->beast_tribes = $beast_tribes;
+$xivdata->game_editions = $game_editions;
 $xivdata->meta = $meta_data;
 
 $tmp = json_encode($xivdata, JSON_PRETTY_PRINT);
