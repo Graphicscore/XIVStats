@@ -6,6 +6,7 @@ class XIV_DATA implements \JsonSerializable{
     public $job_population; //JOB_POPULATION
     public $grandcompany_population;
     public $beast_tribes;
+    public $game_editions;
     public $meta;
     public function jsonSerialize()
     {
@@ -16,6 +17,7 @@ class XIV_DATA implements \JsonSerializable{
             'jobs' => $this->job_population,
             'grandcompany' => $this->grandcompany_population,
             'beasttribes' => $this->beast_tribes,
+            'game_editions' => $this->game_editions,
             'meta' => $this->meta
         ];
     }

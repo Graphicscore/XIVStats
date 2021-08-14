@@ -463,6 +463,25 @@ $jobs = JOB_POPULATION::Create($classes,$active_classes);
 
 $grand_company = GRAND_COMPANY_POPULATION::Create($gc_count,$active_gc_count);
 
+$game_editions = [
+    'pre_orders' => [
+        'arr' => $pre_arealmreborn,
+        'heavensward' => $pre_heavensward,
+        'stormblood' => $pre_stormblod,
+        'shadowbringers' => $pre_shadowbringers,
+        'endwalker' => $pre_endwalker
+    ],
+    'collectors' => [
+        'arr_pc' => $pc_collectors,
+        'arr_ps4' => $ps4_collectors,
+        'heavensward' => $heavensward_collectors,
+        'stormblood' => $stormblood_collectors,
+        'shadowbringers' => $shadowbringers_collectors,
+        'endwalker' => $endwalker_collectors
+    ]
+];
+
+
 $meta_data = new META();
 
 $meta_data->aggregation_data->total_characters = 50000000; //currently hardcoded as an approximate value, this should be moved into the databse
@@ -476,6 +495,7 @@ $xivdata->realms = new REALM_CONTAINER($american_realm,$japanese_realm,$european
 $xivdata->job_population = $jobs;
 $xivdata->grandcompany_population = $grand_company;
 $xivdata->beast_tribes = $beast_tribes;
+$xivdata->game_editions = $game_editions;
 $xivdata->meta = $meta_data;
 
 $tmp = json_encode($xivdata, JSON_PRETTY_PRINT);
