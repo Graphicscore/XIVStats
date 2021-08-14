@@ -485,6 +485,12 @@ $jobs = JOB_POPULATION::Create($classes,$active_classes);
 
 $grand_company = GRAND_COMPANY_POPULATION::Create($gc_count,$active_gc_count);
 
+$meta_data = new META();
+
+$meta_data->aggregation_data->total_characters = 50000000; //currently hardcoded as an approximate value, this should be moved into the databse
+$meta_data->aggregation_data->progressed_characters = $characters->all;
+$meta_data->aggregation_data->active = true; //this should also be loaded from the databse
+
 $xivdata = new XIV_DATA();
 $xivdata->characters = $characters;
 $xivdata->race_popuation = $race;
@@ -492,6 +498,7 @@ $xivdata->realms = new REALM_CONTAINER($american_realm,$japanese_realm,$european
 $xivdata->job_population = $jobs;
 $xivdata->grandcompany_population = $grand_company;
 $xivdata->beast_tribes = $beast_tribes;
+$xivdata->meta = $meta_data;
 
 $tmp = json_encode($xivdata, JSON_PRETTY_PRINT);
 file_put_contents("../data/xivdata.pretty.json",$tmp);

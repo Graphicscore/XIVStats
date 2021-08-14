@@ -138,11 +138,7 @@ $(function() {
     getDataFromUrl(function(data){
     console.log(data);
 
-    if(true)//gathering is in process
-    {
-        var progress = (data.characters.all / 50000000.0); //temporary until this is provided by the backend
-        $("#infobox-progress-label").text("Progress: " + parseFloat(progress.toFixed(4)) + "%");
-    }
+    setupAggregationFloat(data.meta.aggregation);
 
     $("#label_player_count").text(data.characters.all.toLocaleString('en'));
     $("#label_active_player_count").text(data.characters.active.toLocaleString('en'));
@@ -176,6 +172,15 @@ $(function() {
     createBeastTribesChart($("#div_beast_tribes")[0],data.beasttribes)
 });
 });
+
+function setupAggregationFloat(aggregationData){
+    if(aggregationData.active)//gathering is in process
+    {
+        var progress = (aggregationData.progressed_characters / aggregationData.total_characters) * 100; //temporary until this is provided by the backend
+        $("#infobox-progress-label").text("Progress: " + parseFloat(progress.toFixed(4)) + "%");
+        $("#infobox").removeClass("hidden");
+    }
+}
 
 function createGrandCompanyChart(div, data){
     var labels = ["None", "Immortal Flames", "Maelstrom", "Order of the Twin Adder"];
