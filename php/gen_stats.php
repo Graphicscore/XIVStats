@@ -292,37 +292,25 @@ while($row = $player_overview_query->fetch_assoc()) {
 
     // Physical Items
     $arrartbook += isset($row["arrartbook"]) && $row["arrartbook"] == 1 ? 1 : 0;
-    $fmt_arrartbook = number_format($arrartbook);
     $beforemeteor += isset($row["beforemeteor"]) && $row["beforemeteor"] == 1 ? 1 : 0;
-    $fmt_beforemeteor = number_format($beforemeteor);
     $beforethefall += isset($row["beforethefall"]) && $row["beforethefall"] == 1 ? 1 : 0;
-    $fmt_beforethefall = number_format($beforethefall);
     $soundtrack += isset($row["soundtrack"]) && $row["soundtrack"] == 1 ? 1 : 0;
-    $fmt_soundtrack = number_format($soundtrack);
     $moogleplush += isset($row["moogleplush"]) && $row["moogleplush"] == 1 ? 1 : 0;
-    $fmt_moogleplush = number_format($moogleplush);
     $sbartbook += isset($row["sbartbook"]) && $row["sbartbook"] == 1 ? 1 : 0;
-    $fmt_sbartbook = number_format($sbartbook);
     $sbartbooktwo += isset($row["sbartbooktwo"]) && $row["sbartbooktwo"] == 1 ? 1 : 0;
-    $fmt_sbartbooktwo = number_format($sbartbooktwo);
 
     // Eternal Bond
     $saw_eternal_bond += isset($row["saweternalbond"]) && $row["saweternalbond"] == 1 ? 1 : 0;
-    $fmt_saw_eternal_bond = number_format($saw_eternal_bond);
     $did_eternal_bond += isset($row["dideternalbond"]) && $row["dideternalbond"] == 1 ? 1 : 0;
-    $fmt_did_eternal_bond = number_format($did_eternal_bond);
 
     // Player Commendations
     $comm50 += isset($row["comm50"]) && $row["comm50"] == 1 ? 1 : 0;
-    $fmt_comm50 = number_format($comm50);
 
     // Hildibrand
     $hildibrand += isset($row["hildibrand"]) && $row["hildibrand"] == 1 ? 1 : 0;
-    $fmt_hildibrand = number_format($hildibrand);
 
     // ARR Sightseeing Log
     $sightseeing += isset($row["sightseeing"]) && $row["sightseeing"] == 1 ? 1 : 0;
-    $fmt_sightseeing = number_format($sightseeing);
 
     // Ocean Fishing
     $oceanfishing_5k += in_array("The Major-General", $minions) == 1 ? 1 : 0;
