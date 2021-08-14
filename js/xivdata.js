@@ -170,8 +170,29 @@ $(function() {
     createGrandCompanyChart($("#div_population_gc_active")[0],data.grandcompany.active)
 
     createBeastTribesChart($("#div_beast_tribes")[0],data.beasttribes)
+
+    renderGameEditionCounts(data.game_editions);
 });
 });
+
+function renderGameEditionCounts(editionData){
+    $("#label-preorder-arr").text(editionData.pre_orders.arr.toLocaleString('en'));
+    $("#label-preorder-heavensward").text(editionData.pre_orders.heavensward.toLocaleString('en'));
+    $("#label-preorder-stormblood").text(editionData.pre_orders.stormblood.toLocaleString('en'));
+    $("#label-preorder-shadowbringers").text(editionData.pre_orders.shadowbringers.toLocaleString('en'));
+    $("#label-preorder-endwalker").text(editionData.pre_orders.endwalker.toLocaleString('en'));
+
+    $("#label-collectors-pc").text(editionData.collectors.arr_pc.toLocaleString('en'));
+    $("#label-collectors-ps4").text(editionData.collectors.arr_ps4.toLocaleString('en'));
+    $("#label-collectors-heavensward").text(editionData.collectors.heavensward.toLocaleString('en'));
+    $("#label-collectors-stormblood").text(editionData.collectors.stormblood.toLocaleString('en'));
+    $("#label-collectors-shadowbringers").text(editionData.collectors.shadowbringers.toLocaleString('en'));
+    if(editionData.collectors.endwalker > 0){
+        $("#label-collectors-endwalker").text(editionData.collectors.endwalker.toLocaleString('en'));
+    } else {
+        $("#label-collectors-endwalker").text("-");
+    }
+}
 
 function setupAggregationFloat(aggregationData){
     if(aggregationData.active)//gathering is in process
