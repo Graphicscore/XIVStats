@@ -7,7 +7,7 @@ echo "Checking dependencies...."
 sudo apt-get -y install httpie jq
 
 echo "Requesting Webservice Token..."
-PORTAINER_TOKEN=$(http --body POST "$PORTAINER_AUTH_URL" Username="$PORTAINER_USER" Password="$PORTAINER_PASSWORD" | jq -r '.jwt')
+PORTAINER_TOKEN=$(http POST "$PORTAINER_AUTH_URL" Username="$PORTAINER_USER" Password="$PORTAINER_PASSWORD" | jq -r '.jwt')
 PORTAINER_TOKEN_HEADER="Authorization: Bearer $PORTAINER_TOKEN"
 
 echo "Pull latest image..."
