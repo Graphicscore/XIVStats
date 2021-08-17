@@ -4,7 +4,7 @@ set +H
 
 echo "Checking dependencies...."
 
-apt-get -y install httpie jq
+sudo apt-get -y install httpie jq
 
 echo "Requesting Webservice Token..."
 PORTAINER_TOKEN=$(http --body POST "$PORTAINER_AUTH_URL" Username="$PORTAINER_USER" Password="$PORTAINER_PASSWORD" | jq -r '.jwt')
