@@ -45,3 +45,22 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy to remote docker
+        env:
+          PORTAINER_BASE: ${{ secrets.PORTAINER_BASE }}
+          PORTAINER_DOCKER_URL: ${{ secrets.PORTAINER_DOCKER_URL }}
+          PORTAINER_AUTH_URL: ${{ secrets.PORTAINER_AUTH_URL }}
+          PORTAINER_USER: ${{ secrets.PORTAINER_USER }}
+          PORTAINER_PASSWORD: ${{ secrets.PORTAINER_PASSWORD }}
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+
+        run: bash ./.github/workflows/deploy.sh
+
+    
