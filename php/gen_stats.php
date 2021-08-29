@@ -30,7 +30,7 @@ function handleClass($row, $classDef, &$totalArray) {
     if($level > 0) {
         $totalArray[$classDef[KEY]][COUNT]++;
     }
-    return 0;
+    return $level;
 }
 
 function handleEurekaLevel($eurekaLevel, $mounts, &$totalArray) {
@@ -228,35 +228,11 @@ while($row = $player_overview_query->fetch_assoc()) {
     }
     $race_gender_count[$race][$gender]++;
 
-    handleClass($row, CLASS_GLA, $classes);
-    handleClass($row, CLASS_PUG, $classes);
-    handleClass($row, CLASS_MRD, $classes);
-    handleClass($row, CLASS_LNC, $classes);
-    handleClass($row, CLASS_ARC, $classes);
-    handleClass($row, CLASS_ROG, $classes);
-    handleClass($row, CLASS_CNJ, $classes);
-    handleClass($row, CLASS_THM, $classes);
-    handleClass($row, CLASS_ACN, $classes);
-    handleClass($row, CLASS_SCH, $classes);
-    handleClass($row, CLASS_DRK, $classes);
-    handleClass($row, CLASS_MCH, $classes);
-    handleClass($row, CLASS_AST, $classes);
-    handleClass($row, CLASS_SAM, $classes);
-    handleClass($row, CLASS_RDM, $classes);
-    handleClass($row, CLASS_BLU, $classes);
-    handleClass($row, CLASS_GNB, $classes);
-    handleClass($row, CLASS_DNC, $classes);
-    handleClass($row, CLASS_CRP, $classes);
-    handleClass($row, CLASS_BSM, $classes);
-    handleClass($row, CLASS_ARM, $classes);
-    handleClass($row, CLASS_GSM, $classes);
-    handleClass($row, CLASS_LWR, $classes);
-    handleClass($row, CLASS_WVR, $classes);
-    handleClass($row, CLASS_ALC, $classes);
-    handleClass($row, CLASS_CUL, $classes);
-    handleClass($row, CLASS_MIN, $classes);
-    handleClass($row, CLASS_BTN, $classes);
-    handleClass($row, CLASS_FSH, $classes);
+    $avgmaxlevel = 0;
+
+    foreach (CLASS_DEFS as &$classdef) {
+        $avgmaxlevel = max(handleClass($row, $classdef, $classes),$avgmaxlevel);
+    }
 
     handleGear($row, GEAR_MAIN_HAND, $gear);
     handleGear($row, GEAR_OFF_HAND, $gear);
@@ -343,11 +319,12 @@ while($row = $player_overview_query->fetch_assoc()) {
     if(in_array("Wind-up Mystel", $minions)) {
         $is_active = true;
     } else {
-        $lastModifiedDate = new \DateTime($row["date_active"]);
-        $now = new \DateTime();
-        if($lastModifiedDate->diff($now)->days < 31) {
-            $is_active = true;
-        }
+        //$lastModifiedDate = new \DateTime($row["date_active"]);
+        //$now = new \DateTime();
+        //if($lastModifiedDate->diff($now)->days < 31) {
+        //    $is_active = true;
+        //}
+        $is_active = $avgmaxlevel >= 80;
     }
 
     if($is_active){//in_array("Wind-up Mystel", $minions)) {  
@@ -371,36 +348,10 @@ while($row = $player_overview_query->fetch_assoc()) {
         }
         $active_race_gender_count[$race][$gender]++;
 
-        handleClass($row, CLASS_GLA, $active_classes);
-        handleClass($row, CLASS_PUG, $active_classes);
-        handleClass($row, CLASS_MRD, $active_classes);
-        handleClass($row, CLASS_LNC, $active_classes);
-        handleClass($row, CLASS_ARC, $active_classes);
-        handleClass($row, CLASS_ROG, $active_classes);
-        handleClass($row, CLASS_CNJ, $active_classes);
-        handleClass($row, CLASS_THM, $active_classes);
-        handleClass($row, CLASS_ACN, $active_classes);
-        handleClass($row, CLASS_SCH, $active_classes);
-        handleClass($row, CLASS_DRK, $active_classes);
-        handleClass($row, CLASS_MCH, $active_classes);
-        handleClass($row, CLASS_AST, $active_classes);
-        handleClass($row, CLASS_SAM, $active_classes);
-        handleClass($row, CLASS_RDM, $active_classes);
-        handleClass($row, CLASS_BLU, $active_classes);
-        handleClass($row, CLASS_GNB, $active_classes);
-        handleClass($row, CLASS_DNC, $active_classes);
-        handleClass($row, CLASS_CRP, $active_classes);
-        handleClass($row, CLASS_BSM, $active_classes);
-        handleClass($row, CLASS_ARM, $active_classes);
-        handleClass($row, CLASS_GSM, $active_classes);
-        handleClass($row, CLASS_LWR, $active_classes);
-        handleClass($row, CLASS_WVR, $active_classes);
-        handleClass($row, CLASS_ALC, $active_classes);
-        handleClass($row, CLASS_CUL, $active_classes);
-        handleClass($row, CLASS_MIN, $active_classes);
-        handleClass($row, CLASS_BTN, $active_classes);
-        handleClass($row, CLASS_FSH, $active_classes);
-
+        foreach ($CLASS_DEFS as &$classdef) {
+            handleClass($row, $classdef, $active_classes);
+        }
+        
         handleGear($row, GEAR_MAIN_HAND, $active_gear);
         handleGear($row, GEAR_OFF_HAND, $active_gear);
 
