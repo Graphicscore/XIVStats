@@ -1,4 +1,4 @@
-FROM jtreminio/php-nginx:7.4
+FROM jtreminio/php-nginx:8.1
 
 ENV DB_HOST=db
 ENV DB_DATABASE=database
